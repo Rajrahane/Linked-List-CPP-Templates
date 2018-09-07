@@ -1,6 +1,46 @@
 #include<bits/stdc++.h>
 using namespace std;
-//-----------------------class Node--------------------------------------------------------
+//-----------------------class Student--------------------------------------------------------
+class Student{
+	private:
+		int rollNo;
+		float cgpa;
+		Student* next;
+	public:
+		Student(){
+			rollNo=cgpa=-1;
+		}			//Empty Constructor
+		Student(int rollNo,float cgpa){			//Constructor with parameter
+			this->rollNo=rollNo;
+			this->cgpa=cgpa;
+			next=NULL;		
+		}
+		void setData(int rollNo,float cgpa);
+		int getRollNo();
+		void setNextNode(Student*);
+		friend ostream& operator<<(ostream&,const Student);
+		Student* getNextNode();
+};
+ostream& operator<<(ostream& out,Student node){
+	out<<"Roll No : "<<node.rollNo;
+	out<<", CGPA : "<<node.cgpa;
+	return out;
+}
+void Student::setData(int rollNo,float cgpa){			//data setter function
+	this->rollNo=rollNo;
+	this->cgpa=cgpa;
+}
+int Student::getRollNo(){				//data getter function
+	return rollNo;
+}
+void Student::setNextNode(Student *add){		//next-pointer setter function
+	next=add;
+}
+Student* Student::getNextNode(){			//next-pointer getter function
+	return next;
+}
+//--------------------------------------------------------------
+//-----------class MyNode-----------------------------------------------
 class MyNode{
 		int data;
 		MyNode* next;
@@ -13,9 +53,13 @@ class MyNode{
 		void setData(int data);
 		int getData();
 		void setNextNode(MyNode*);
+		friend ostream& operator<<(ostream&,const MyNode);
 		MyNode* getNextNode();
 };
-
+ostream& operator<<(ostream& out,MyNode node){
+	out<<"Data : "<<node.data;
+	return out;
+}
 void MyNode::setData(int data){			//data setter function
 	this->data=data;
 }
@@ -65,7 +109,7 @@ Node LinkedList<Node>::removeFirst(){			//function to remove data at 1st locatio
 		elements--;
 		return removedNode;
 	}
-	return NULL;
+	return Node();
 }
 template<class Node>
 int LinkedList<Node>::size(){				//returns size of linkedList
@@ -84,19 +128,21 @@ ostream& operator<<(ostream & out,const LinkedList<Node> ll){		//funtion to prin
 	}
 	else{
 		Node *p=ll.head;
-		out<<"[";
+		out<<"{";
 		while(p!=NULL){
-			out<<p->getData();			//revisit this line
+			out<<"["<<*p<<"]";			
+			//out<<p->getData();			//revisit this line
 			if(p->getNextNode()!=NULL)
-				out<<", ";
+				out<<",\n";
 			p=p->getNextNode();
 		}
-		out<<"]";
+		out<<"}";
 	}
 }
 //-------------------------------End Of Class----------------------------------------------
 int main(){
 	LinkedList<MyNode> ll;
+
 	MyNode *n=new MyNode();
 	//for(int i=0;i<4;i++){
 		(n)->setData(45);
@@ -105,17 +151,28 @@ int main(){
 		n2->setData(34);
 		ll.addFirst(n2);
 	//}
-	/*ll.addFirst(45);
-	ll.addFirst(98);
-	ll.addFirst(56);
-	ll.addFirst(67);*/
 	cout<<ll<<endl;
 	cout<<"Size:"<<ll.size()<<endl;
 	int i=0;while(i<ll.size()){
 		MyNode newNode=ll.removeFirst();
-		cout<<ll<<endl;
-		cout<<"Size:"<<ll.size()<<endl;
-		
+		cout<<ll<<endl;cout<<newNode;
+		cout<<"Size:"<<ll.size()<<endl;		
 	}
+
+	LinkedList<Student> sll;
+
+	Student *s1=new Student();Student *s2=new Student(2,3.8);
+	s1->setData(4,3.6);
+	sll.addFirst(s1);sll.addFirst(s2);
+	cout<<sll<<endl;
+	cout<<"Size:"<<sll.size()<<endl;
+	i=0;while(i<sll.size()){
+		Student newNode=sll.removeFirst();
+		cout<<sll<<endl;cout<<newNode;
+		cout<<"Size:"<<sll.size()<<endl;		
+	}
+	Student newNode=sll.removeFirst();
+		cout<<sll<<endl;cout<<newNode;
+		cout<<"Size:"<<sll.size()<<endl;
 	return 0;
 }
