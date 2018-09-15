@@ -10,6 +10,7 @@ class LinkedList{
 		public:
 			LinkedList(){								//default constructor
 				head=NULL;							//to set head to NULL
+				tail=NULL;							//to set tail to NULL
 				elements=0;
 			}
 			friend ostream& operator<< <E>(ostream&,const LinkedList<E> ll); 	//funtion to print LinkedList
@@ -19,10 +20,12 @@ class LinkedList{
 
 		private:		
 			class Node{					//Single unit of LL-Node
+						Node *prev;
 						E* element;
 						Node* next;
 				public:
-					Node(E* element,Node* next){
+					Node(Node *prev,E* element,Node* next){
+						this->prev=prev;
 						this->element=element;
 						this->next=next;	
 					}
@@ -38,16 +41,27 @@ class LinkedList{
 					void setNextNode(Node * next){
 						this->next=next;
 					}
+					Node* getPrevNode(){
+						return prev;				
+					}
+					void setPrevNode(Node * prev){
+						this->prev=prev;
+					}					
 			};		
 			Node* head;					//pointer to head of LinkedList
+			Node* tail;					//pointer to tail of LinkedList
 			int elements;
 			
 };
 
 template<class E>
 void LinkedList<E>::addFirst(E *n){				//function to insert data at 1st location
-	Node *newNode=new Node(n,head);
-	head=newNode;
+	Node *newNode=new Node(NULL,n,head);
+	if(head==NULL)
+		tail=newNode;	
+	else
+		head->setPrevNode(newNode);	
+	head=newNode;						//this statement only if an SLL
 	/*E *newNode=n;
 	newNode->setNextNode(head);
 	head=newNode;*/
@@ -57,16 +71,20 @@ void LinkedList<E>::addFirst(E *n){				//function to insert data at 1st location
 template<class E>
 E LinkedList<E>::removeFirst(){					//function to remove data at 1st location
 	if(head!=NULL){
+		elements--;
 		Node * deletedNode=head;
 		head=head->getNextNode();
 		deletedNode->setNextNode(NULL);
 		E removedNode=*deletedNode->getElement();
 		deletedNode->setElement(NULL);
 		delete deletedNode;
-		elements--;
-		return removedNode;
+		if(head==NULL)					//for DLL
+			tail=NULL;
+		else 
+			head->setPrevNode(NULL);
+		return removedNode;				//check whether to return ptr or variable
 	}
-	return E();
+	return E();						//else throw NoSuchElementException()
 }
 
 template<class E>

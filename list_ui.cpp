@@ -58,13 +58,13 @@ int Student::getRollNo(){					//rollNo getter function
 //--------------------------------------------------------------
 
 int main(){
-	LinkedList<float> ill;float *num=new float;*num=22.34;
+	/*LinkedList<float> ill;float *num=new float;*num=22.34;
 	ill.addFirst(num);
 	cout<<ill<<endl;
 	*num=33.555;
 	cout<<ill<<endl;
 	ill.removeFirst();
-	cout<<ill<<endl;cout<<*num;
+	cout<<ill<<endl;cout<<*num;*/
 
 	LinkedList<MyNode> ll;
 
@@ -75,6 +75,13 @@ int main(){
 	MyNode *n2=new MyNode();
 		n2->setData(34);
 		ll.addFirst(n2);
+		MyNode newNoden=ll.removeFirst();
+		cout<<ll<<endl;cout<<newNoden;
+		cout<<"Size:"<<ll.size()<<endl;	
+		n2=new MyNode();
+		n2->setData(76);
+		ll.addFirst(n2);
+		
 	//}
 	cout<<ll<<endl;
 	cout<<"Size:"<<ll.size()<<endl;
