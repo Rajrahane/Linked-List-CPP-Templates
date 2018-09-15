@@ -58,13 +58,13 @@ int Student::getRollNo(){					//rollNo getter function
 //--------------------------------------------------------------
 
 int main(){
-	/*LinkedList<float> ill;float *num=new float;*num=22.34;
+	LinkedList<float> ill;float *num=new float;*num=22.34;
 	ill.addFirst(num);
 	cout<<ill<<endl;
 	*num=33.555;
 	cout<<ill<<endl;
 	ill.removeFirst();
-	cout<<ill<<endl;cout<<*num;*/
+	cout<<ill<<endl;cout<<*num;
 
 	LinkedList<MyNode> ll;
 
@@ -80,13 +80,13 @@ int main(){
 		cout<<"Size:"<<ll.size()<<endl;	
 		n2=new MyNode();
 		n2->setData(76);
-		ll.addFirst(n2);
+		ll.addLast(n2);
 		
 	//}
 	cout<<ll<<endl;
 	cout<<"Size:"<<ll.size()<<endl;
 	int i=0;while(i<ll.size()){
-		MyNode newNode=ll.removeFirst();
+		MyNode newNode=ll.removeLast();
 		cout<<ll<<endl;cout<<newNode;
 		cout<<"Size:"<<ll.size()<<endl;		
 	}
@@ -99,7 +99,7 @@ int main(){
 	cout<<sll<<endl;
 	cout<<"Size:"<<sll.size()<<endl;
 	i=0;while(i<sll.size()){
-		Student newNode=sll.removeFirst();
+		Student newNode=sll.removeLast();
 		cout<<sll<<endl;cout<<newNode;
 		cout<<"Size:"<<sll.size()<<endl;		
 	}

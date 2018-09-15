@@ -17,6 +17,8 @@ class LinkedList{
 			int size();								//return number of elements
 			void addFirst(E*);							//add element at 1st location
 			E removeFirst();							//remove element at 1st location
+			void addLast(E*);							//add element at last location
+			E removeLast();								//remove element at last location
 
 		private:		
 			class Node{					//Single unit of LL-Node
@@ -71,13 +73,13 @@ void LinkedList<E>::addFirst(E *n){				//function to insert data at 1st location
 template<class E>
 E LinkedList<E>::removeFirst(){					//function to remove data at 1st location
 	if(head!=NULL){
-		elements--;
 		Node * deletedNode=head;
 		head=head->getNextNode();
 		deletedNode->setNextNode(NULL);
 		E removedNode=*deletedNode->getElement();
 		deletedNode->setElement(NULL);
 		delete deletedNode;
+		elements--;
 		if(head==NULL)					//for DLL
 			tail=NULL;
 		else 
@@ -85,6 +87,36 @@ E LinkedList<E>::removeFirst(){					//function to remove data at 1st location
 		return removedNode;				//check whether to return ptr or variable
 	}
 	return E();						//else throw NoSuchElementException()
+}
+
+template<class E>
+void LinkedList<E>::addLast(E *element){
+	Node *newNode=new Node(tail,element,NULL);
+	if(tail==NULL)
+		head=newNode;
+	else
+		tail->setNextNode(newNode);
+	tail=newNode;
+	elements++;
+}
+
+template<class E>
+E LinkedList<E>::removeLast(){
+	if(tail!=NULL){
+		Node * deletedNode=tail;
+		tail=tail->getPrevNode();
+		deletedNode->setPrevNode(NULL);
+		E removedNode=*deletedNode->getElement();
+		deletedNode->setElement(NULL);
+		delete deletedNode;
+		elements--;
+		if(tail==NULL)
+			head=NULL;
+		else 
+			tail->setNextNode(NULL);
+		return removedNode;
+	}
+	return E();							//else throw NoSuchElementException()
 }
 
 template<class E>
