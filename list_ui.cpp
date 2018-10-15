@@ -63,18 +63,24 @@ int main(){
 	cout<<ill<<endl;
 	*num=33.555;
 	cout<<ill<<endl;
-	ill.removeFirst();
+	float r=ill.removeFirst();
 	cout<<ill<<endl;cout<<*num;
-
+	
+	
 	LinkedList<MyNode> ll;
 
 	MyNode *n=new MyNode();
 	//for(int i=0;i<4;i++){
 		(n)->setData(45);
-		ll.addFirst(n);
+		ll.addFirst(n);ll.addFirst(n);
 	MyNode *n2=new MyNode();
 		n2->setData(34);
-		ll.addFirst(n2);
+		try{
+			ll.add(ll.size(),n2);
+		}catch(std::out_of_range e){
+			cout<<e.what()<<endl;
+		}
+			
 		MyNode newNoden=ll.removeFirst();
 		cout<<ll<<endl;cout<<newNoden;
 		cout<<"Size:"<<ll.size()<<endl;	
