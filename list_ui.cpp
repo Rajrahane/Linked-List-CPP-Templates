@@ -58,16 +58,16 @@ int Student::getRollNo(){					//rollNo getter function
 //--------------------------------------------------------------
 
 int main(){
-	LinkedList<float> ill;float *num=new float;*num=22.34;
+	/*LinkedList<float> ill;float *num=new float;*num=22.34;
 	ill.addFirst(num);
 	cout<<ill<<endl;
 	*num=33.555;
 	cout<<ill<<endl;
 	float r=ill.removeFirst();
-	cout<<ill<<endl;cout<<*num;
+	cout<<ill<<endl;cout<<*num;*/
 	
 	
-	LinkedList<MyNode> ll;
+	/*LinkedList<MyNode> ll;
 
 	MyNode *n=new MyNode();
 	//for(int i=0;i<4;i++){
@@ -95,7 +95,7 @@ int main(){
 		MyNode newNode=ll.removeLast();
 		cout<<ll<<endl;cout<<newNode;
 		cout<<"Size:"<<ll.size()<<endl;		
-	}
+	}*/
 
 	LinkedList<Student> sll;
 
@@ -104,13 +104,13 @@ int main(){
 	sll.addFirst(s1);sll.addFirst(s2);
 	cout<<sll<<endl;
 	cout<<"Size:"<<sll.size()<<endl;
-	i=0;while(i<sll.size()){
-		Student newNode=sll.removeLast();
-		cout<<sll<<endl;cout<<newNode;
+	int i=0;while(i<sll.size()){
+		Student *newNode=sll.removeLast();
+		cout<<sll<<endl;cout<<*newNode;
 		cout<<"Size:"<<sll.size()<<endl;		
 	}
-	Student newNode=sll.removeFirst();
-		cout<<sll<<endl;cout<<newNode;
+	Student *newNode=sll.removeFirst();
+		cout<<sll<<endl;cout<<*newNode;
 		cout<<"Size:"<<sll.size()<<endl;
 	return 0;
 }

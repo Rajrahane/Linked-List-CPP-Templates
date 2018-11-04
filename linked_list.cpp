@@ -1,4 +1,5 @@
 #include<bits/stdc++.h>
+#include"my_exception.cpp"
 using namespace std;
 
 //--------------------class LinkedList--------------------------------------------------
@@ -89,7 +90,7 @@ E* LinkedList<E>::removeFirst(){					//function to remove data at 1st location
 			head->setPrevNode(NULL);
 		return removedNode;				//check whether to return ptr or variable
 	}
-	return new E();						//else throw NoSuchElementException()
+	throw NoSuchElementException();				//else throw NoSuchElementException()
 }
 
 template<class E>
@@ -119,7 +120,7 @@ E* LinkedList<E>::removeLast(){
 			tail->setNextNode(NULL);
 		return removedNode;
 	}
-	return new E();							//else throw NoSuchElementException()
+	throw NoSuchElementException();				//else throw NoSuchElementException()
 }
 
 template<class E>
