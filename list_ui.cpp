@@ -100,17 +100,19 @@ int main(){
 	LinkedList<Student> sll;
 
 	Student *s1=new Student();Student *s2=new Student(2,3.8);
+	Student *s3=new Student(45,9.92);
 	s1->setData(4,3.6);
-	sll.addFirst(s1);sll.addFirst(s2);
+	sll.addFirst(s1);sll.addFirst(s2);sll.addFirst(s2);
+	sll.add(2,s3);
 	cout<<sll<<endl;
 	cout<<"Size:"<<sll.size()<<endl;
+	Student *newNode=sll.remove(2);
+		cout<<sll<<endl;cout<<*newNode;
+		cout<<"Size:"<<sll.size()<<endl;
 	int i=0;while(i<sll.size()){
-		Student *newNode=sll.removeLast();
+		Student *newNode=sll.removeFirst();
 		cout<<sll<<endl;cout<<*newNode;
 		cout<<"Size:"<<sll.size()<<endl;		
 	}
-	Student *newNode=sll.removeFirst();
-		cout<<sll<<endl;cout<<*newNode;
-		cout<<"Size:"<<sll.size()<<endl;
 	return 0;
 }

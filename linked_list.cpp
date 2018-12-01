@@ -1,3 +1,13 @@
+/*
+*Doubly Linked List Implementation.
+*Implements add,remove operations at all positions 
+*Operations that index into the list will traverse the list from beginning or end ,whichever is close to specified index.(n/2 search)
+*Permits classes with an overloaded << extraction operator.
+*Permits dynamically allocated basic datatypes.
+* 
+*@author Rajvaibhav D Rahane
+*/
+
 #include<bits/stdc++.h>
 #include"my_exception.cpp"
 using namespace std;
@@ -19,11 +29,12 @@ class LinkedList{
 			void addFirst(E*);							//add element at 1st location
 			E* removeFirst();							//remove element at 1st location
 			void addLast(E*);							//add element at last location
-			E* removeLast();								//remove element at last location
+			E* removeLast();							//remove element at last location
 			void add(int,E*);							//add element at given index
+			E* remove(int);								//remove element at given index
 
 		private:		
-			class Node{					//Single unit of LL-Node
+			class Node{					//Single unit of LL-Node	//note:change class to template
 						Node *prev;
 						E* element;
 						Node* next;
@@ -57,6 +68,11 @@ class LinkedList{
 			int elements;
 			bool isPositionIndex(int index);
 			void checkPositionIndex(int index);
+			bool isElementIndex(int index);
+			void checkElementIndex(int index);
+			Node* node(int index);
+			void linkBefore(E*,Node*);
+			E* unLink(Node* removedNode);
 			
 };
 
@@ -147,14 +163,25 @@ ostream& operator<<(ostream & out,const LinkedList<E> ll){		//funtion to print L
 }
 
 template<class E>
-bool LinkedList<E>::isPositionIndex(int index){
-        return index >= 0 && index <= elements;
+bool LinkedList<E>::isElementIndex(int index){				//index=element is invalid, index=[0,elements-1]
+	return index>=0 && index < elements;				//fx used when deleting element
 }
 
 template<class E>
-void LinkedList<E>::checkPositionIndex(int index){
+bool LinkedList<E>::isPositionIndex(int index){				//index=element is valid for position
+        return index >= 0 && index <= elements;				//fx used when inserting element
+}
+
+template<class E>
+void LinkedList<E>::checkElementIndex(int index){
+	if(!isElementIndex(index))
+		throw std::out_of_range("Index out of Bounds:");	//note:throw with msg of index and size
+}
+
+template<class E>
+void LinkedList<E>::checkPositionIndex(int index){			
 	if(!isPositionIndex(index))
-		throw std::out_of_range("Index out of Bounds:");
+		throw std::out_of_range("Index out of Bounds:");	//note:throw with msg of index and size
 }
 
 template<class E>
@@ -162,6 +189,66 @@ void LinkedList<E>::add(int index,E* element){				//Not fully Implemented-for in
 	checkPositionIndex(index);
 	if(index==elements)
 		addLast(element);
+	else linkBefore(element,node(index));				//add a Node at index
+}
+
+template<class E>
+typename LinkedList<E>::Node * LinkedList<E>::node(int index){				//find node at index in elements/2 time
+	Node *returnedNode;
+	if(index<(elements>>1)){
+		returnedNode=head;
+		for(int i=0;i<index;i++){				//first half
+			returnedNode=returnedNode->getNextNode();
+		}
+	}else{								//next half
+		returnedNode=tail;
+		for(int i=elements-1;i>index;i--){
+			returnedNode=returnedNode->getPrevNode();
+		}
+	}
+	return returnedNode;
+}
+
+template<class E>
+void LinkedList<E>::linkBefore(E* element,Node* nextNode){	//add a Node before nextNode
+	Node* prevNode=nextNode->getPrevNode();
+	Node *newNode=new Node(prevNode,element,nextNode);
+	nextNode->setPrevNode(newNode);
+	if(prevNode==NULL){
+		head=newNode;
+	}else{
+		prevNode->setNextNode(newNode);
+	}
+	elements++;
+}
+
+template<class E>
+E* LinkedList<E>::unLink(Node* removedNode){
+	E* returnedElement=removedNode->getElement();
+	removedNode->setElement(NULL);
+	Node *next=removedNode->getNextNode();
+	Node *prev=removedNode->getPrevNode();
+		
+	if(prev==NULL){
+		head=next;			
+	}else{
+		prev->setNextNode(next);
+		removedNode->setPrevNode(NULL);
+	}	
+	if(next==NULL){
+		tail=prev;
+	}else{
+		next->setPrevNode(prev);
+		removedNode->setNextNode(NULL);
+	}
+	delete removedNode;
+	elements--;
+	return returnedElement;
+}
+
+template<class E>
+E* LinkedList<E>::remove(int index){
+	checkElementIndex(index);
+	return unLink(node(index));
 }
 //-------------------------------End Of Class----------------------------------------------
-
